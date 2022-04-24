@@ -44,3 +44,5 @@ proc1() {
 ```sh
 ./quickstart
 ```
+Any of the smaller four buttons can be used to start a process. When starting `quickstart` through integrated terminal or ssh, any character available on the keyboard can be used.
+When the middle button is pressed (this corresponds to a `\n` character and is handled by `terminator`), the process gets killed.
