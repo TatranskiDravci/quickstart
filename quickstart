@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# configure keys
+key1="a"
+key2="b"
+key3="c"
+key4="d"
+
+# configure processes (procX gets triggered by keyX)
+proc1="echo a"
+proc2="echo b"
+proc3="echo c"
+proc4="echo d"
+
+# save original stty settings
+settings=$(stty -g)
+
+while :;
+do
+    stty raw -echo
+    byte=$(dd bs=1 count=1 2> /dev/null)    # read keys
+    printf "$byte\n"
+
+    # select process to run
+    case $byte in
+        $key1)
+            $proc1 &
+            ./terminator $!
+            ;;
+        $key2)
+            $proc2 &
+            ./terminator $!
+            ;;
+        $key3)
+            $proc3 &
+            ./terminator $!
+            ;;
+        $key4)
+            $proc4 &
+            ./terminator $!
+            ;;
+
+    esac
+done
+
+# reload original stty settings
+stty "$settings"

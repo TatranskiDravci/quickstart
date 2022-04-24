@@ -1,0 +1,17 @@
+#!/bin/sh
+
+killkey="q"   # configure kill key
+
+
+pid="$1"
+
+while :;
+do
+    byte=$(dd bs=1 count=1 2> /dev/null)
+
+    if [ "$byte" = "$killkey" ]; then
+        kill "$pid"
+        printf "killed $pid"
+        break
+    fi
+done
