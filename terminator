@@ -1,15 +1,12 @@
 #!/bin/sh
 
-killkey="q"   # configure kill key
-
-
 pid="$1"
 
 while :;
 do
-    byte=$(dd bs=1 count=1 2> /dev/null)
+    byte=$(read newline)            # use read, dd clogs up input
 
-    if [ "$byte" = "$killkey" ]; then
+    if [ "$byte" = "\n" ]; then
         kill "$pid"
         printf "killed $pid"
         break

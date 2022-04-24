@@ -7,39 +7,46 @@ key3="c"
 key4="d"
 
 # configure processes (procX gets triggered by keyX)
-proc1="echo a"
-proc2="echo b"
-proc3="echo c"
-proc4="echo d"
+# every process must end with `pkill terminator`
+proc1() {
+    pkill terminator
+}
+proc2() {
+    pkill terminator
+}
+proc3() {
+    pkill terminator
+}
+proc4() {
+    pkill terminator
+}
 
 # save original stty settings
 settings=$(stty -g)
+stty raw -echo
 
 while :;
 do
-    stty raw -echo
     byte=$(dd bs=1 count=1 2> /dev/null)    # read keys
-    printf "$byte\n"
 
     # select process to run
     case $byte in
         $key1)
-            $proc1 &
+            proc1 &
             ./terminator $!
             ;;
         $key2)
-            $proc2 &
+            proc2 &
             ./terminator $!
             ;;
         $key3)
-            $proc3 &
+            proc3 &
             ./terminator $!
             ;;
         $key4)
-            $proc4 &
+            proc4 &
             ./terminator $!
             ;;
-
     esac
 done
 
